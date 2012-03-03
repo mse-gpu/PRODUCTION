@@ -1,0 +1,21 @@
+# version : 0.0.2
+# Cedric.Bilat@he-arc.ch
+
+#######################
+#  Compilateur : Cuda #
+#######################
+
+# Compiler name
+#	nvcc
+#
+# Compiler option
+#	-O3 				Optimisatiin
+#	-use_fast_math		Optimisation
+#   -m64				Target 64 bits (pas utile)
+# Linker option
+#	-shared				Target .dll
+#	-deviceemu 			Emulation hardware(deprecated)
+
+#######################
+#  		END			  #
+#######################

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<!-- Autor : Cedric.Bilat@he-arc.ch -->
+<!-- version: 0.0.1 -->
+	
+<project name="importRessourceExterne" default="import"  basedir=".">
+
+	<!-- ***********************  -->
+	<!--  	Property   			-->
+	<!-- ************************ -->
+
+	<property file="../Workspace.properties"/>
+	<property file="variables.properties"/>
+	
+	<property name="workspace.deploy.bin.ext.dir" 			value="../../Deploy/bin/ext" />
+	<property name="workspace.deploy.bin.dll.dir" 			value="../../Deploy/bin/dll" />
+	<property name="workspace.deploy.bin.io.inputs" 		value="../../Deploy/bin/io/inputs" />
+
+	<!-- ***********************  -->
+	<!--  	target                             -->
+	<!-- ************************ -->
+	
+	<target name="import" >
+	
+		<copy todir="${workspace.deploy.bin.ext.dir}">
+			<fileset dir="${projet1.importer.jar.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${workspace.deploy.bin.dll.dir}">
+			<fileset dir="${projet1.importer.dll.dir}">
+				<include name="**/*.dll"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${workspace.deploy.bin.io.inputs}">
+			<fileset dir="${projet1.importer.io.inputs}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+	</target>
+	
+
+</project>

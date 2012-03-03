@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<!-- Autor : Cedric.Bilat@he-arc.ch -->
+<!-- version: 0.0.3 -->
+	
+<project name="archiverWorkspace" default="archive"  basedir=".">
+
+	<property file="../Workspace.properties"/>
+	<property file="variables.properties"/>
+
+	<target name="archive" >
+		<buildnumber file="archiver.num"/>
+		<property name="version" value="${build.number}" />
+		<zip basedir="${workspace.root.path}" excludes="**/Deploy/**,**/report/**,**/bin/**" destfile="${workspace.archiver.path}/${workspace.name}_${version}.zip" compress="true" update="false" />
+	</target>
+
+</project>

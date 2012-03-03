@@ -1,0 +1,1 @@
+ant -buildfile ./private/importer.xml -logfile log.txt

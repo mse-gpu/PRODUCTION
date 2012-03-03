@@ -1,0 +1,106 @@
+# Version 	: 0.0.2
+# Date		: 07.02.2012
+# Author 	: Cedric.Bilat@he-arc.ch
+#
+# Use:
+#
+#	make -f XXX
+#	make -f XXX clean
+#	make -f XXX echoing
+#	make -f XXX all
+#	make -f XXX version
+#	make -f XXX help
+#	make -f XXX deploy
+#	...
+#	Sous windows make peut être mingw32-make
+#
+# Hyp:
+#
+#     Windows:
+#			Path 		:	icl (intel),cl (visual)
+#			va env		:	icl : call iclvars_intel64.bat
+#							cl  : call Vcvars32.bat amd64
+#							
+#	  Windows/linux
+#			Path		: 	g++,make,sh
+#			va env 		:	nothing to configure!
+#
+#	  Structure projet:
+#			src					# .cpp,.cu,.h,.lib
+#			obj					# .c -> .o
+#			lib					# .o -> .exe,.dll,.lib,.so,.a
+#		
+#			Interresant: src peut contenir des sous-folders, no problem! Aucune contrainte, mais il peut etre interessant de ventiler ainsi	
+#				src
+#					cpp	
+#					cu	
+#					header
+#					lib				#lib qui seront utiles au linkage
+#					resources
+#
+#			Si src, contient un folder resources, alors à chaque build, celui-ci est copier dans le folder specifier par
+#				TARGET_DEPLOY_PATH dans dataProject.mk
+#
+#		Dependances:
+#			Les propriétés du projet sont spécifiés dans 
+#
+#				dataProject.mk
+#					Obligatoire:
+#						TARGET_NAME
+#						TARGET_MODE							(EXE,SHARED_LIB,STATIC_LIB)
+#						TARGET_PATH
+#					Facultatif:
+#						TARGET_DEPLOY_PATH
+#						CODE_DEFINE_VARIABLES				(Injecter avec -DXXX)(ne mettre que XXX, -D added automaticly)
+#						SRC_AUX								(si fichier src à l'extérieur du folder racine src)
+#
+#
+#			Les propriétés du compilateur sont spécifiés dans
+#							
+#				XXX.mk (gcc.mk, mingw.mk, visual.mk, intelWin.mk, intelLinux.mk)
+#					Obligatoire: 
+#						CXX:=								(g++,icl,cl)
+#						AR:=								(ar,xilib,lib)
+#					
+#						EXTENSION_OBJ:=						(o,obj)
+#						EXTENSION_LIB:=						(a,lib)
+#						EXTENSION_DLL:=						(so,dll)
+#						EXTENSION_EXE:=						(run,exe)
+#					Facultatif:
+#						LIB_PREFIXE:=						(lib => libTargetName.a)
+#						CXXFLAGS:=							(flag compilation)
+#						LDFLAGS_AUX:=						(flag linkage)
+#						CODE_DEFINE_VARIABLES:=				(Injecter avec -DXXX)(ne mettre que XXX, -D added automaticly)
+#						EXCLUDE_LIBRARY_FILES:=				(separateur espace)
+#						ADD_LIBRARY_FILES:=					(separateur espace)(sans .lib ou prefixe.lib pour gcc)
+#						IS_DEFAULT_SYS_LIBRARY_ENABLE:=		(not use with gcc)(true si actif)
+#						IS_ADVANCED_SYS_LIBRARY_ENABLE:=	(not use with gcc)(true si actif)
+
+#
+#		Inclusion: XXX.mk include 
+#							1) dataProject.mk
+#							2) fileSet.mk
+#							3) flags_XXX.mk
+#							4) makeFileCPP.mk.mk
+#
+# Tester sous:
+#
+#		OS :	Windows			: 	Seven64
+#				mingw32-make	:	3.81  (from MINGW32)
+#				GCC 32 bits		:	3.4.5 (from MINGW32)
+#				GCC 64 bits     :   4.4.5 (from MINGW64)
+#				Visual			:	Visual 2008 (15.00.21022.08)
+#				Intel			:	11.0.075
+#				Java			:   1.6.020
+#				sh 32 bits		:	3.1.17	(from MINGW64 or RTOOLs)
+#
+#		OS	:	Linux			: 	Ubuntu64 (9.08,10.04)
+#				make			:	3.81
+#				GCC 			:	4.4.3
+#				Java			: 	1.6.020
+#				sh				:   ?
+#
+# See
+#		OptionCompilateur.txt
+#
+# END

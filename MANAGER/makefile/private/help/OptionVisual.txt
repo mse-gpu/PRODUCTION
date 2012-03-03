@@ -1,0 +1,81 @@
+# version : 0.0.2
+# Cedric.Bilat@he-arc.ch
+
+#######################
+# Compilateur : Visual#
+#######################
+
+# Compiler name
+#	cl
+#
+# CL Compileur option:
+#	Path
+#		/I	XXX				Header search path is XXX
+#	Warning
+#		/W3					Warning level
+#		/w					Suppres warning messages 	
+#		/Wall				Enables all warning
+#	Optimisation
+#		/Ox 				Optimisation
+#		/Od					Sans optimisation
+# 		/arch:SSE			Minimum CPU Architecture
+# 		/arch:SSE2			Minimum CPU Architectur
+#	Avancer
+#		/EHsc				Enable C++ exception handling
+#		/nologo				Suppresses startup banner
+#		/fp:precise			Floating point precise
+#		/Gd					Calling convention __cdecl
+#		/MT					see after 
+#		/MD					see after								
+#	 Truc
+#		-DXXX						Passe au code la variable XXX (same as #define XXX in code)
+#	 OpenMP
+#		/openmp				Enable use of OpenMP
+#							Compilation:
+#								opm.h					(already include in visual distribution)
+#							Link:
+#								libiomp5md.lib 			(already include in visual distribution,but must be explicitly link!)
+#							Runtime: 
+#								libiomp5md.dll 			(already include in visual distribution)
+#							Truc:
+#								Use dependencyWalker.exe to see which .dll is required)
+#
+#	Link (to pass to cl)
+#		/Link				Prefixe of all option below: Example : cl TTT /link /LIBPATH:XXX /LD
+#
+# CL Linker option (to write after /link)
+#	Path
+#		/LIBPATH:XXX		Library .a search path is XXX
+#	Target
+#		/DLL 				Target .dll 		(don't forget to set extension .dll to TARGET_NAME)	(build the .dll and the associate.lib if __declspec(dllexport) is use at less once
+#		/MACHINE:X64		Target 64 bits
+#		/DEBUG
+#	Avancer
+#		/INCREMENTAL:NO		Incremental linking
+#		/OPT:REF			Eliminate Unreferenced Data
+#		/DYNAMICBASE:NO		Disable Image Randomization
+#
+# About CRT (C Rutime library):
+#	If your application use specificity of windows, you need to link some basic library as
+#
+#		kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib 
+#		shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib
+#
+#	or maybe all library available with visual and refered by the va LIBS (initialise by the script vcvarsamd64.bat). In this last case, you must choice 
+#	what CRT you want to use. There 5 choices. Every one is represented by one of this lib:
+#
+#		libcmt.lib libcmt.lib  libcmtd.lib msvcrtd.lib msvcmrt.lib msvcurt.lib msvcrt.lib
+#
+#	The general choice are:
+#
+#		(C1) use msvcrt.lib and compile with flag /MD
+#		(C2) use libcmt.lib and compile with flag /MT
+#
+#	Put only on of this lib in the /LIBPATH
+#
+# Help
+#	http://msdn.microsoft.com/en-us/library/19z1t1wy.aspx
+
+#######################
+#  		END			  #
+#######################

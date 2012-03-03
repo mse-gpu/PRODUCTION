@@ -1,0 +1,89 @@
+# version : 0.0.2
+# Cedric.Bilat@he-arc.ch
+
+#######################
+#  Compilateur : gcc  #
+#######################
+
+# Compiler name
+#	g++
+#
+# Compiler Option
+#	Path
+#		-I	XXX						Header search path is XXX		
+#	Warning
+#		-ainsi						Norme
+#		-pedantic					Norme Ainsi+
+#		-W							Print extra warning messages
+#		-w							Suppres warning messages
+#		-Wall						Combinaison of common option (warning)
+#		-fno-implicit-templates		to use template (instanciation avancée)
+#	 Optimisation
+#		-O3							Optimisation
+# 		-mtune=generic				Optimisation (most common IA32/AMD64/EM64T processors)
+#		-mtune=native				Optimisation (detection automatique arch)
+#		-mtune=pentium4				Optimisation MMX, SSE, SSE2
+#		-mtune=prescott				Optimisation MMX, SSE, SSE2,SSE3
+#		-mtune=nocona				Optimisation MMX, SSE, SSE2,SSE3,EMT64
+#		-mtune=core2				Optimisation MMX, SSE, SSE2,SSE3,EMT64,SSSE3	(Requiert G++ modern)
+#		-fomit-frame-pointer 		Optimisation
+#		-frerun-loop-opt 			Optimisation
+#		-fgcse 						Optimisation
+#	 Truc
+#		-DXXX						Passe au code la variable XXX (same as #define XXX in code)
+#	OpenMP
+#		-fopenmp					Enable use of OpenMP
+#									Compilation:
+#										opm.h					(already include in mingw64 distribution)
+#									Link:
+#										libgomp.lib 			(already include in mingw64 distribution,link with gomp)
+#									Runtime: 
+#										libgcc_S_SJLJ-1.dll 	(already include in mingw64 distribution)
+#										libgomp-1.dll			(already include in mingw64 distribution)
+#										pthreadGC2-W64.dll 		(doit être installé séparrement)
+#									Truc:
+#										Use dependencyWalker.exe to see which .dll is required)
+#
+# Linker Option
+#	Path
+#		-L	XXX									Library .a search path is XXX
+#		-l	XXX									Library file xxx.a maybe usefull to link (search path is in -L folder). Becarefull, xXX without extension							
+#	Target
+#		-shared									To target a dynamice library : .so		(don't forget to set extension .so to TARGET_NAME)
+#	Avancer
+#		-Wl,XXX									Wl passe option XXX au linker
+#		-D_JNI_IMPLEMENTATION 					Use .dll with java
+#		-Wl,--kill-at							Use .dll with java 
+#		-Wl,--unresolved-symbols=ignore-in-shared-libs
+#		-static-libgcc -static-libstdc+			Forcer le linkage statique des .dll "système"
+#
+# Usefull
+#	Use .dll of Visual (cl) or Intel (icl) in g++ project
+#
+#		Goal : XXX.dll -> XXX.def
+#			pexports XXX.dll>XXX.def
+#
+#		Goal : XXX.dll XXX.def -> XXX.a
+#			dlltool --machine i386:x86-64 --dllname XXX.dll --input-def XXX.def --output-lib XXX.a
+#			dlltool --machine i386 		  --dllname XXX.dll --input-def XXX.def --output-lib XXX.a
+#			dlltool --help
+#			
+#			Next with your g++ project
+#				Compil	with 	XXX.h
+#				Link	with	XXX.a
+#				Execute	with	XXX.dll
+#
+#		Download 
+#			dlltool.exe 			:	Brother of g++.exe in installation folder!
+#			pexports.exe	32 bits	:	By example, download mingw-utils-YYY of mingw32 (http://www.mingw.org/) 
+#
+# Help
+#	http://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html#Option-Summary
+#	http://www.mingw.org/
+#	http://mingw-w64.sourceforge.net/
+#	http://sourceforge.net/projects/mingw-w64/
+#
+
+#######################
+#  		END			  #
+#######################

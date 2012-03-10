@@ -23,5 +23,7 @@ CBI_GLIMAGE_CUDA void mapDevicePixels(cudaGraphicsResource* cudaRessource,uchar4
  */
 CBI_GLIMAGE_CUDA void unMapDevicePixels(cudaGraphicsResource *cudaRessource);
 
+CBI_GLIMAGE_CUDA void resetDevicePixel(cudaGraphicsResource* cudaRessource);
+
 
 #endif /* IMAGECUDAS_H */

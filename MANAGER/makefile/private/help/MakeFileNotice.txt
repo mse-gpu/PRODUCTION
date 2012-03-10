@@ -1,28 +1,31 @@
-# Version 	: 0.0.2
-# Date		: 07.02.2012
+# Version 	: 0.0.3
+# Date		: 22.02.2012
 # Author 	: Cedric.Bilat@he-arc.ch
 #
 # Use:
 #
 #	make -f XXX
+#	make -f XXX init
 #	make -f XXX clean
 #	make -f XXX echoing
 #	make -f XXX all
 #	make -f XXX version
 #	make -f XXX help
 #	make -f XXX deploy
-#	...
-#	Sous windows make peut être mingw32-make
+#	make -f XXX run
+#	make -f XXX runDeploy
+#	make -f XXX runGl		(Only with vncserver with linux)
+#	make -f XXX runGlDeploy (Only with vncserver with linux)
 #
 # Hyp:
 #
 #     Windows:
-#			Path 		:	icl (intel),cl (visual)
+#			Path 		:	icl (intel),xilib(intel),cl (visual),lib (visual)
 #			va env		:	icl : call iclvars_intel64.bat
 #							cl  : call Vcvars32.bat amd64
 #							
 #	  Windows/linux
-#			Path		: 	g++,make,sh
+#			Path		: 	g++,make,sh, icpc (intel), xild (intel)
 #			va env 		:	nothing to configure!
 #
 #	  Structure projet:
@@ -46,42 +49,55 @@
 #
 #				dataProject.mk
 #					Obligatoire:
-#						TARGET_NAME
-#						TARGET_MODE							(EXE,SHARED_LIB,STATIC_LIB)
-#						TARGET_PATH
+#						TARGET_NAME:=
+#						TARGET_MODE:=							(EXE,SHARED_LIB,STATIC_LIB)
+#						TARGET_PATH:=
 #					Facultatif:
-#						TARGET_DEPLOY_PATH
-#						CODE_DEFINE_VARIABLES				(Injecter avec -DXXX)(ne mettre que XXX, -D added automaticly)
-#						SRC_AUX								(si fichier src à l'extérieur du folder racine src)
+#						TARGET_DEPLOY_PATH:=
+#						CODE_DEFINE_VARIABLES:=				(Injecter avec -DXXX)(ne mettre que XXX, -D added automaticly)
+#						SRC_AUX+=							(si fichier src à l'extérieur du folder racine src)
+#						NVCCFLAGS:=							(flag compilation for nvcc)
+#						NVCCLDFLAGS:=						(flag linkage for nvcc)
 #
 #
-#			Les propriétés du compilateur sont spécifiés dans
+#			Les propriétés du compilateur sont spécifiés dans :
 #							
 #				XXX.mk (gcc.mk, mingw.mk, visual.mk, intelWin.mk, intelLinux.mk)
+#
 #					Obligatoire: 
-#						CXX:=								(g++,icl,cl)
-#						AR:=								(ar,xilib,lib)
-#					
-#						EXTENSION_OBJ:=						(o,obj)
-#						EXTENSION_LIB:=						(a,lib)
-#						EXTENSION_DLL:=						(so,dll)
-#						EXTENSION_EXE:=						(run,exe)
+#						SRC_AUX:= 							(additionnal source for specific compiler,) (empty by default)
 #					Facultatif:
-#						LIB_PREFIXE:=						(lib => libTargetName.a)
 #						CXXFLAGS:=							(flag compilation)
 #						LDFLAGS_AUX:=						(flag linkage)
+#						ARFLAGS:=							(flag static lib)
 #						CODE_DEFINE_VARIABLES:=				(Injecter avec -DXXX)(ne mettre que XXX, -D added automaticly)
 #						EXCLUDE_LIBRARY_FILES:=				(separateur espace)
 #						ADD_LIBRARY_FILES:=					(separateur espace)(sans .lib ou prefixe.lib pour gcc)
-#						IS_DEFAULT_SYS_LIBRARY_ENABLE:=		(not use with gcc)(true si actif)
-#						IS_ADVANCED_SYS_LIBRARY_ENABLE:=	(not use with gcc)(true si actif)
-
+#						IS_DEFAULT_SYS_LIBRARY_ENABLE:=		(not use with gcc,mingw)(true si actif)
+#						IS_ADVANCED_SYS_LIBRARY_ENABLE:=	(not use with gcc,mingw)(true si actif)
 #
-#		Inclusion: XXX.mk include 
+#					Inclusion : XXX.mk include 
 #							1) dataProject.mk
 #							2) fileSet.mk
 #							3) flags_XXX.mk
-#							4) makeFileCPP.mk.mk
+#							4) makeFileCPP.mk
+#
+#			Les propriétés Cuda sont spécifiés dans :
+#
+#				cudaXXX.mk (cudaWin.mk, cudaLinux.mk)
+#
+#					Obligatoire: 
+#						SRC_AUX:= 							(additionnal source for specific compiler,) (empty by default)
+#					Facultatif:
+#						CXXFLAGS:=							(flag compilation)
+#						CXXLDFLAGS:=						(flag linkage)
+#						EXCLUDE_LIBRARY_FILES:=				(separateur espace)
+#						ADD_LIBRARY_FILES:=					(separateur espace)(sans .lib ou prefixe.lib pour gcc)
+#						DEFAULT_SYS_LIBRARY_FILES:=			(librairie system only for visual)
+#
+#					Inclusion : cudaXXX.mk include 
+#							1) dataProject.mk
+#							2) makeFileCudaXXX.mk
 #
 # Tester sous:
 #
@@ -94,11 +110,10 @@
 #				Java			:   1.6.020
 #				sh 32 bits		:	3.1.17	(from MINGW64 or RTOOLs)
 #
-#		OS	:	Linux			: 	Ubuntu64 (9.08,10.04)
+#		OS	:	Linux			: 	Ubuntu64 (9.08,10.04,11.04)
 #				make			:	3.81
 #				GCC 			:	4.4.3
 #				Java			: 	1.6.020
-#				sh				:   ?
 #
 # See
 #		OptionCompilateur.txt

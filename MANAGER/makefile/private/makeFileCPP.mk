@@ -1,4 +1,4 @@
-# Version 	: 0.0.2
+# Version 	: 0.0.3
 # Date		: 26.01.2012
 # Author 	: Cedric.Bilat@he-arc.ch
 #
@@ -187,6 +187,11 @@ endif
 ifeq (${COMPILATEUR},g++)
 	@echo "[CBI]->compiling .cpp : "$<
 endif
+ifeq (${COMPILATEUR},INTEL)
+ifeq (${OS},Linux)
+	@echo "[CBI]->compiling .cpp : "$<
+endif
+endif
 	@$(CXX) $(CXXFLAGS) $(OUT_FILE_COMPILE)$@ -c  $< 
 	
 # -c = compilation
@@ -202,6 +207,11 @@ ifeq (${COMPILATEUR},mingw)
 endif
 ifeq (${COMPILATEUR},g++)
 	@echo "[CBI]->compiling .c : "$<
+endif
+ifeq (${COMPILATEUR},INTEL)
+ifeq (${OS},Linux)
+	@echo "[CBI]->compiling .cpp : "$<
+endif
 endif
 	@$(CXX) $(CXXFLAGS) $(OUT_FILE_COMPILE)$@ -c  $< 
 	

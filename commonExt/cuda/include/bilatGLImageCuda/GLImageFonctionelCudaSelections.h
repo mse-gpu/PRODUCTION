@@ -13,7 +13,7 @@ using std::stack;
 class CBI_GLIMAGE_CUDA GLImageFonctionelCudaSelections: public GLImageCudaSelections
     {
     public:
-	GLImageFonctionelCudaSelections(int w, int h, DomaineMaths domaineMath, int deviceId = 0, int pxFrame = 0, int pyFrame = 0);
+	GLImageFonctionelCudaSelections(int w, int h, DomaineMaths domaineMath,int deviceId = 0, int pxFrame = 0, int pyFrame = 0);
 	virtual ~GLImageFonctionelCudaSelections();
 
 	void restoreFromDomaineHistory(); //Last Domaine push in History
@@ -26,7 +26,10 @@ class CBI_GLIMAGE_CUDA GLImageFonctionelCudaSelections: public GLImageCudaSelect
 
     protected:
 
-	virtual void performKernel(uchar4* ptrDevPixels, int w,int h, const DomaineMaths& domaineNew)=0;
+	/**
+	 * w et h fixe, ne change pas au cours du temps !
+	 */
+	virtual void performKernel(uchar4* ptrDevPixels, int w, int h, const DomaineMaths& domaineNew)=0;
 
 	/**
 	 * Call each time the domaine change
@@ -42,10 +45,8 @@ class CBI_GLIMAGE_CUDA GLImageFonctionelCudaSelections: public GLImageCudaSelect
 	 **/
 	void selectionPerformed(const DomaineEcrans& domaineEcran, int dx, int dy);
 
-
-
     private:
-	void performKernel(uchar4* ptrDevPixels,int w,int h);
+	void performKernel(uchar4* ptrDevPixels, int w, int h);
 	void keyPressed(unsigned char key, int x, int y);
 	void specialKeyPressed(int key, int x, int y);
     private:

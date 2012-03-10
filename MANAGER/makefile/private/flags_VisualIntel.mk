@@ -1,4 +1,4 @@
-## Version 	: 0.0.1
+## Version 	: 0.0.3
 # Date		: 26.01.2012
 # Author 	: Cedric.Bilat@he-arc.ch
 #
@@ -19,14 +19,18 @@ endif
 #flag permettant de linker dynamiquement les librairies systemes de visual (la CRT entre autre)
 ifdef IS_ADVANCED_SYS_LIBRARY_ENABLE
 	override CXXFLAGS+=/MD #dynamicaly link CRT with the target
-	# Problem :
-	# 		/MD generate a .manifest file, this file is required then for using target
-	# Solution :
-	#		Embed the manifest in the target using mt.exe
-	#		SEE : http://msdn.microsoft.com/en-us/library/ms235591(v=vs.80).aspx
-	EMBED_MANIFEST:=mt.exe
 else
-	override CXXFLAGS+=/MT #statically link the MS CRT to the DLL par défaut !
+	#override CXXFLAGS+=/MT #statically link the MS CRT to the DLL par défaut !
+	# en commentaire, pour pouvoir mettre /MD pour linker own lib without activate IS_ADVANCED_SYS_LIBRARY_ENABLE
+endif
+
+# Problem :
+#            /MD generate a .manifest file, this file is required then for using target
+# Solution :
+#            Embed the manifest in the target using mt.exe
+#            SEE : http://msdn.microsoft.com/en-us/library/ms235591(v=vs.80).aspx
+ifneq (, $(findstring /MD,$(CXXFLAGS)))#findstring return vide si /MD pas trouver!
+	EMBED_MANIFEST:=mt.exe
 endif
 
 ifeq ($(COMPILATEUR),VISUAL)
@@ -46,9 +50,10 @@ ifeq ($(COMPILATEUR),VISUAL)
 		EXCLUDE_LIBRARY_FILES+= libcmt.lib libcmtd.lib msvcrtd.lib msvcmrt.lib 	
 	endif
 	
-#############
-# 	OMP		#
-#############
+	#############
+	# 	OMP		#
+	#############
+
 	ifneq (, $(findstring openmp,$(CXXFLAGS)))#findstring return vide si openmp pas trouver!
 		ADD_LIBRARY_FILES+=libiomp5md.lib 
     endif
@@ -140,7 +145,6 @@ override CXXFLAGS += /nologo
 override CXXFLAGS += $(HEADER_FLAG)
 override CXXFLAGS += $(CODE_DEFINE_VARIABLES_D)
 override LDFLAGS += $(LINK_TAG) $(LIB_PATH_FLAG) $(LIB_FLAG) $(LDFLAGS_AUX) /nologo
-
 
 #########
 #  End  #

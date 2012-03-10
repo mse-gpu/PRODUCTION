@@ -9,7 +9,7 @@
 class CBI_GLIMAGE_CUDA GLImageCudaSelections : public GLImageCudas
     {
     public:
-	GLImageCudaSelections(int w,int h,int deviceId=0, int pxFrame = 0, int pyFrame = 0);
+	GLImageCudaSelections(int w,int h,int deviceId = 0, int pxFrame = 0, int pyFrame = 0);
 	virtual ~GLImageCudaSelections();
 
 

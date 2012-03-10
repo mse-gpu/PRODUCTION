@@ -14,10 +14,12 @@
 #	Warning
 #		/w					Suppres warning messages
 #	Optimisation
+#		/fast				Windows(/O3 /Qipo /Qprec-div- /QxHost) Linux(-ipo -O3 -no-prec-div -static -xHost)
 #		/O3 				Optimisation 
 #		/QxSSSE3			Optimisation with processor      SSSE3 SSE3 SSE2 SSE MMX (intel core 2 duo)				On windows
 #		/QxSSE4.1			Optimisation with processor SSE4 SSSE3 SSE3 SSE2 SSE MMX								On windows
-#		/QaxSSE4.2			Optimisation with processor	SSE4 SSSE3 SSE3 SSE2 SSE MMX(Intel® Core™ i7 processors)	On windows
+#		/QxSSE4.2			Optimisation with processor	SSE4 SSSE3 SSE3 SSE2 SSE MMX(Intel® Core™ i7 processors)	On windows
+#		/AVX				
 #		/Qparallel			Optimisation																			On windows
 #		/Qpar-threshold100	Optimisation			
 #																		On windows
@@ -36,6 +38,7 @@
 #
 #	Note 
 #		Most of cl option are available here!
+#		Replace / by on linux plateforme
 #
 # Linker Option
 #	/LD		To target a dynamice library : .dll			(don't forget to set extension .dll to TARGET_NAME)

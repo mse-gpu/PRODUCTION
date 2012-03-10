@@ -53,6 +53,9 @@ class CBI_GLIMAGE_CUDA GLImageCudas: public GLUTWindowCustomiser_A
 
     protected:
 
+	/**
+	 * w et h fixe, ne change pas au cours du temps !
+	 */
 	virtual void performKernel(uchar4* ptrDevPixels,int w,int h)=0;
 
 	virtual void initPerformed();

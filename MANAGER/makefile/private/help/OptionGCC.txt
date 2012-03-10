@@ -23,9 +23,10 @@
 # 		-mtune=generic				Optimisation (most common IA32/AMD64/EM64T processors)
 #		-mtune=native				Optimisation (detection automatique arch)
 #		-mtune=pentium4				Optimisation MMX, SSE, SSE2
-#		-mtune=prescott				Optimisation MMX, SSE, SSE2,SSE3
-#		-mtune=nocona				Optimisation MMX, SSE, SSE2,SSE3,EMT64
-#		-mtune=core2				Optimisation MMX, SSE, SSE2,SSE3,EMT64,SSSE3	(Requiert G++ modern)
+#		-mtune=prescott				Optimisation MMX, SSE, SSE2, SSE3
+#		-mtune=nocona				Optimisation MMX, SSE, SSE2, SSE3, EMT64
+#		-mtune=core2				Optimisation MMX, SSE, SSE2, SSE3, EMT64,SSSE3	
+#		-mtune=corei7				Optimisation MMX, SSE, SSE2, SSE3, SSSE3, SSE4.1 and SSE4.2
 #		-fomit-frame-pointer 		Optimisation
 #		-frerun-loop-opt 			Optimisation
 #		-fgcse 						Optimisation

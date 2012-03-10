@@ -1,4 +1,4 @@
-# Version 	: 0.0.2
+# Version 	: 0.0.3
 # Date		: 26.01.2012
 # Author 	: Cedric.Bilat@he-arc.ch
 #
@@ -136,7 +136,7 @@ NVCC := nvcc
 PTXAS_FLAGS := -fastimul
 OBJ_EXTENSION:=o
 OPTION_SEPARATOR:=-#attention, end without space
-LINK_FLAG_DLL:=-shared -fvisibility=hidden #with space !
+LINK_FLAG_DLL:=-shared #with space ! pour nvcc
 EXTENSION_LIB:=.a
 EXTENSION_DLL:=.so
 LIB_PREFIXE:=lib# example : libXXX.a
@@ -155,12 +155,6 @@ endif
 TARGET_NAME:=$(TARGET_NAME)$(ARCHI_32_64)
 
 ###########
-#  omp   #
-###########
-
-ADD_LIBRARY_FILES+=gomp
-
-###########
 # jcuda   #
 ###########
 
@@ -168,6 +162,13 @@ ADD_LIBRARY_FILES+=gomp
 # Solution : 	 All intermediate files are stored in --keep-dir current directory! 
 
 override NVCCFLAGS += -keep -keep-dir ${TARGET_CUBIN}
+
+############
+# optimisation #
+############
+
+override NVCCFLAGS += -use_fast_math#idem -ftz=true -prec_div=false -prec_sqrt=false
+override NVCCFLAGS += --fmad=true 
 
 ############
 #Set files #
@@ -275,6 +276,11 @@ CODE_DEFINE_VARIABLES_D:= $(addprefix  -D,$(CODE_DEFINE_VARIABLES))
 override NVCCFLAGS   += $(ALL_HEADERS_I) 
 override NVCCLDFLAGS += $(LIB_PATH_FLAG) $(LIB_FLAG) $(SRC_A_FILES_NOT_STANDARD)
 override CXXFLAGS += $(CODE_DEFINE_VARIABLES_D)
+
+#Ajoute automatiquement gomp(gcc) or iomp5(Intel)  si on use OpenMP
+ifneq (, $(findstring openmp,$(CXXFLAGS)))#findstring return vide si openmp pas trouver!
+	ADD_LIBRARY_FILES+=gomp#iomp5 pour intel
+endif
 
 #Directory search path (use implicit in rules)
 VPATH := $(SRC_PATH_ALL)

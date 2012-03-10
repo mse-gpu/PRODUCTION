@@ -1,4 +1,4 @@
-# Version 	: 0.0.2
+# Version 	: 0.0.3
 # Date		: 26.01.2012
 # Author 	: Cedric.Bilat@he-arc.ch
 #
@@ -67,6 +67,22 @@ TARGET_NAME:=$(TARGET_NAME)$(ARCHI_32_64)
 override NVCCFLAGS += -keep -keep-dir ${TARGET_CUBIN}
 
 ############
+# optimisation #
+############
+
+override NVCCFLAGS += -use_fast_math#idem -ftz=true -prec_div=false -prec_sqrt=false
+override NVCCFLAGS += --fmad=true 
+
+############
+# windows #
+############
+
+ifeq ($(OS),Win)
+	override NVCCFLAGS += --cl-version=2008 #onlx window, version of cl
+endif
+
+
+############
 # Params   #
 ############
 
@@ -96,6 +112,10 @@ SRC_LIB_FILES := $(foreach dir,$(SRC_PATH_ALL),$(wildcard $(dir)/*.lib)) $(ADD_L
 #################
 # PREPARE FLAGS #
 #################
+
+#ifneq (, $(findstring openmp,$(CXXFLAGS)))#findstring return vide si openmp pas trouver!
+#	ADD_LIBRARY_FILES+=libiomp5md.lib 
+#endif
 
 #Delete extension .lib
 SRC_LIB_FILES:= $(SRC_LIB_FILES:$(EXTENSION_LIB)=)
@@ -130,7 +150,7 @@ override NVCCLDFLAGS += $(ALL_LIB_L) $(ALL_LIB_FILES_l)
 override CXXFLAGS += $(CODE_DEFINE_VARIABLES_D)
 
 ifneq (, $(findstring /MD,$(CXXFLAGS)))#findstring return vide si /MD pas trouver!
-               override CXXLDFLAGS+=/NODEFAULTLIB:LIBCMT
+	override CXXLDFLAGS+=/NODEFAULTLIB:LIBCMT
 endif
 
 #Adding " " around CXXFLAGS and CXXLDFLAGS, otherwise we can't specifie more than one options !

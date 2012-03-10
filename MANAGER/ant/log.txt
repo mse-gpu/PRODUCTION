@@ -1,6 +1,0 @@
-
-archive:
-      [zip] Building zip: Q:\intra.he-arc.chORGINGRaDISIC030-Projets RaDCBI_KernelJSTglImage\WEclipseBilatTools_169.zip
-
-BUILD SUCCESSFUL
-Total time: 41 seconds

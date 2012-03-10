@@ -1,4 +1,4 @@
-# Version 	: 0.0.2
+# Version 	: 0.0.3
 # Date		: 02.02.2012
 # Author 	: Cedric.Bilat@he-arc.ch
 #
@@ -37,7 +37,7 @@ HEADER_OPTION:=I#attention end with space!
 OUT_FILE_COMPILE:=-o #attention end with space!
 OUT_FILE_LINK:=-o #attention end with space!
 LINK_TAG:=#rien
-LINK_FLAG_DLL:=-shared -fvisibility=hidden #with espace !
+LINK_FLAG_DLL:=-shared #with espace !
 
 LIB_PREFIXE:=lib#rien
 
@@ -119,6 +119,7 @@ ifeq ($(TARGET_MODE),SHARED_LIB)
        GENERATEUR_DLL_DEF:= -Wl,--output-def,$(TARGET_BIN_PATH)/${LIB_PREFIXE}$(TARGET_NAME)$(ARCHI_32_64).def
        GENERATEUR_DLL_LIB_IMPORTATION:= -Wl,--out-implib,$(TARGET_BIN_PATH)/${LIB_PREFIXE}$(TARGET_NAME)$(ARCHI_32_64).dll.$(EXTENSION_LIB)
        LDFLAGS+=$(GENERATEUR_DLL_LIB_IMPORTATION) $(GENERATEUR_DLL_DEF)
+       override CXXFLAGS += -fPIC -fvisibility=hidden
 endif
 
 #Injection variable in .cpp code (VAR1 VAR2 -> -DVAR1 -DVAR2)
